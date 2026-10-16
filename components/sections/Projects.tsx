@@ -8,6 +8,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { PROJECTS } from "@/lib/userInfo";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 
+const PREVIEW_TINTS = [
+  "from-primary/25 via-accent/20 to-muted",
+  "from-leaf/25 via-sky/15 to-muted",
+  "from-accent/30 via-primary/10 to-muted",
+  "from-sky/25 via-leaf/15 to-muted",
+];
+
 export default function Projects() {
   return (
     <section id="projects" className="bg-muted/30 px-4 py-16 sm:px-6 lg:px-8">
@@ -33,9 +40,12 @@ export default function Projects() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.06 }}
             >
-              <Card className="group h-full overflow-hidden transition-all hover:shadow-lg">
-                <div className="flex aspect-[16/9] items-center justify-center bg-gradient-to-br from-muted to-muted/60">
-                  <span className="rounded-full bg-card px-4 py-2 text-xs font-medium tracking-widest shadow-sm">PREVIEW</span>
+              <Card className="group h-full overflow-hidden transition-all hover:-translate-y-1 hover:shadow-warm">
+                <div className={`relative flex aspect-[16/9] items-center justify-center bg-gradient-to-br ${PREVIEW_TINTS[i % PREVIEW_TINTS.length]}`}>
+                  <div aria-hidden className="paper-grain absolute inset-0 opacity-20 mix-blend-multiply" />
+                  <span className="relative -rotate-2 rounded-sm bg-card px-4 py-2 font-hand text-xl shadow-paper transition-transform group-hover:rotate-0">
+                    {project.title}
+                  </span>
                 </div>
                 <CardHeader>
                   <div className="mb-1 flex items-start justify-between gap-3">

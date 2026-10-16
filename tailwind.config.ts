@@ -36,6 +36,8 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        leaf: "hsl(var(--leaf))",
+        sky: "hsl(var(--sky))",
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -50,12 +52,17 @@ const config: Config = {
         sans: ["var(--font-sans)"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
+        hand: ["var(--font-hand)", "cursive"],
       },
       keyframes: {
         "fade-in": {
           "0%": { opacity: "0", transform: "translateY(8px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+      },
+      boxShadow: {
+        warm: "0 18px 50px -22px hsl(var(--primary) / 0.35)",
+        paper: "0 1px 0 hsl(var(--border)), 0 12px 30px -18px hsl(22 40% 20% / 0.25)",
       },
       animation: {
         "fade-in": "fade-in 0.6s ease-out",

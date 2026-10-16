@@ -52,9 +52,10 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="rounded-2xl bg-secondary p-6 text-secondary-foreground">
-              <p className="font-serif text-lg leading-snug">Prefer a quick call? I&apos;m usually free 10am–6pm NPT.</p>
-              <p className="mt-2 text-sm opacity-70">No sales pitch. Just clarity on scope, timeline, and cost.</p>
+            <div className="relative overflow-hidden rounded-2xl bg-secondary p-6 text-secondary-foreground">
+              <div aria-hidden className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-accent/20 blur-2xl" />
+              <p className="relative font-serif text-lg leading-snug">Prefer a quick call? I&apos;m usually free 10am–6pm NPT.</p>
+              <p className="relative mt-2 text-sm opacity-70">No sales pitch. Just clarity on scope, timeline, and cost.</p>
             </div>
           </div>
 
@@ -81,7 +82,7 @@ export default function Contact() {
               <Button type="submit" className="w-full">
                 <Send className="h-4 w-4" /> Send message
               </Button>
-              <p className="text-center text-xs text-muted-foreground">I&apos;ll get back within 24 hours. No spam, ever.</p>
+              <p className="text-center font-hand text-lg text-muted-foreground">I read every message myself, usually with chiya ☕</p>
             </form>
           </Card>
         </div>

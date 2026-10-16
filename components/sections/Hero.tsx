@@ -17,8 +17,9 @@ export default function Hero() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="lg:col-span-7"
           >
+            <p className="mb-2 -rotate-2 font-hand text-2xl text-primary">namaste, I&apos;m Abhishek 👋</p>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border bg-card px-3 py-1.5 text-xs shadow-sm">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent text-accent-foreground">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-sm">
                 <Sparkles className="h-3.5 w-3.5" />
               </span>
               <span className="font-medium tracking-wide">Available for new projects — Q4 2026</span>
@@ -35,7 +36,20 @@ export default function Hero() {
               <br />
               <span className="relative inline-block">
                 feel human.
-                <span className="absolute inset-x-0 -bottom-1 h-2 bg-accent/30 -rotate-1" />
+                <svg
+                  aria-hidden
+                  viewBox="0 0 220 16"
+                  preserveAspectRatio="none"
+                  className="absolute -bottom-2 left-0 h-3 w-full text-accent"
+                >
+                  <path
+                    d="M3 11 C 40 4, 80 14, 118 8 S 190 5, 217 9"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </span>
             </h1>
 
@@ -60,7 +74,7 @@ export default function Hero() {
                 <MapPin className="h-4 w-4 text-primary" /> Butwal, Nepal — Remote worldwide
               </span>
               <span className="flex items-center gap-2">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" /> Responds in ~2h
+                <span className="h-2 w-2 animate-pulse rounded-full bg-leaf" /> Responds in ~2h
               </span>
             </div>
           </motion.div>
@@ -72,18 +86,23 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="relative lg:col-span-5"
           >
-            <div className="relative overflow-hidden rounded-[2rem] border bg-card p-6 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.15)]">
+            <div className="relative overflow-hidden rounded-[2rem] border bg-card p-6 shadow-warm">
+              <div aria-hidden className="paper-grain pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-multiply" />
               {/* subtle paper grid */}
               <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)`, backgroundSize: "20px 20px" }} />
 
               <div className="relative">
                 <div className="mb-6 flex items-center justify-between">
                   <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium tracking-widest"> PROFILE — 2026</span>
-                  <span className="h-2 w-2 rounded-full bg-primary" />
+                  <span className="flex gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-primary" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-accent" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-leaf" />
+                  </span>
                 </div>
 
                 <div className="flex gap-5">
-                  <div className="flex h-[96px] w-[96px] shrink-0 items-center justify-center rounded-2xl bg-secondary text-2xl font-serif font-bold text-secondary-foreground">
+                  <div className="flex h-[96px] w-[96px] shrink-0 -rotate-3 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary to-accent font-serif text-2xl font-bold text-primary-foreground shadow-warm">
                     AP
                   </div>
                   <div>
@@ -101,14 +120,14 @@ export default function Hero() {
                     { k: "Experience", v: "5 yrs" },
                     { k: "Clients", v: "20+" },
                   ].map((s) => (
-                    <div key={s.k} className="rounded-2xl bg-muted p-3">
+                    <div key={s.k} className="rounded-2xl border border-dashed border-primary/25 bg-muted/70 p-3">
                       <div className="font-serif text-lg font-bold">{s.v}</div>
                       <div className="text-[11px] tracking-widest text-muted-foreground">{s.k.toUpperCase()}</div>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-6 flex gap-2">
+                <div className="mt-6 flex flex-wrap gap-2">
                   <span className="rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">React</span>
                   <span className="rounded-full border bg-background px-3 py-1 text-xs">Next.js</span>
                   <span className="rounded-full border bg-background px-3 py-1 text-xs">TypeScript</span>
@@ -118,8 +137,9 @@ export default function Hero() {
             </div>
 
             {/* floating accent */}
-            <div className="absolute -bottom-6 -right-2 hidden rotate-2 rounded-2xl border bg-accent px-4 py-3 text-sm font-medium shadow-lg lg:flex">
-              ✦ &nbsp; Let&apos;s build something useful
+            <div className="absolute -bottom-7 -right-3 hidden rotate-3 rounded-sm bg-accent px-5 pb-3 pt-4 font-hand text-2xl leading-none text-accent-foreground shadow-lg lg:block">
+              <span aria-hidden className="absolute -top-2 left-1/2 h-4 w-14 -translate-x-1/2 -rotate-2 bg-card/70" />
+              let&apos;s build something useful ✦
             </div>
           </motion.div>
         </div>

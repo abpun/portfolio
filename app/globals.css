@@ -4,53 +4,58 @@
 @tailwind utilities;
 
 @layer base {
+  /* Warm paper, terracotta ink, marigold highlights, Himalayan pine */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 9%;
-    --radius: 0.5rem;
-    --chart-1: 0 0% 9%;
-    --chart-2: 0 0% 45%;
-    --chart-3: 0 0% 80%;
-    --chart-4: 0 0% 90%;
-    --chart-5: 0 0% 96%;
+    --background: 38 45% 97%;
+    --foreground: 22 22% 13%;
+    --card: 40 60% 99%;
+    --card-foreground: 22 22% 13%;
+    --popover: 40 60% 99%;
+    --popover-foreground: 22 22% 13%;
+    --primary: 14 62% 45%;
+    --primary-foreground: 38 60% 98%;
+    --secondary: 165 24% 17%;
+    --secondary-foreground: 40 40% 94%;
+    --muted: 36 38% 92%;
+    --muted-foreground: 24 12% 38%;
+    --accent: 39 92% 60%;
+    --accent-foreground: 22 30% 13%;
+    --destructive: 2 70% 52%;
+    --destructive-foreground: 38 60% 98%;
+    --border: 33 26% 85%;
+    --input: 33 26% 82%;
+    --ring: 14 62% 45%;
+    --radius: 0.75rem;
+    --leaf: 150 32% 38%;
+    --sky: 205 45% 45%;
+    --chart-1: 14 62% 45%;
+    --chart-2: 39 92% 55%;
+    --chart-3: 165 24% 27%;
+    --chart-4: 205 45% 45%;
+    --chart-5: 150 32% 38%;
   }
 
   .dark {
-    --background: 0 0% 9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 11%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 11%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 64%;
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62% 30%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 0% 98%;
+    --background: 24 16% 8%;
+    --foreground: 38 35% 92%;
+    --card: 24 14% 11%;
+    --card-foreground: 38 35% 92%;
+    --popover: 24 14% 11%;
+    --popover-foreground: 38 35% 92%;
+    --primary: 16 72% 60%;
+    --primary-foreground: 22 30% 10%;
+    --secondary: 165 22% 14%;
+    --secondary-foreground: 40 40% 92%;
+    --muted: 24 12% 15%;
+    --muted-foreground: 34 14% 64%;
+    --accent: 39 88% 58%;
+    --accent-foreground: 22 30% 10%;
+    --destructive: 2 62% 40%;
+    --border: 24 12% 18%;
+    --input: 24 12% 20%;
+    --ring: 16 72% 60%;
+    --leaf: 150 30% 50%;
+    --sky: 205 50% 60%;
   }
 }
 
@@ -61,12 +66,22 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    /* soft sunlight in the corners so the page never feels flat */
+    background-image:
+      radial-gradient(60rem 40rem at 100% -10%, hsl(var(--accent) / 0.12), transparent 60%),
+      radial-gradient(50rem 36rem at -10% 20%, hsl(var(--primary) / 0.07), transparent 60%);
+    background-attachment: fixed;
   }
   h1, h2, h3, h4 {
     @apply font-serif tracking-tight;
   }
   ::selection {
-    background: hsl(var(--foreground) / 0.1);
+    background: hsl(var(--accent) / 0.45);
+    color: hsl(var(--foreground));
+  }
+  :focus-visible {
+    outline: 2px dashed hsl(var(--primary));
+    outline-offset: 3px;
   }
 }
 
@@ -78,14 +93,14 @@ html {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+  background: hsl(var(--background));
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
+  background: hsl(var(--primary) / 0.35);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.4);
+  background: hsl(var(--primary) / 0.6);
 }
 
 /* Markdown code block styling overrides */
@@ -96,10 +111,15 @@ pre code {
   @apply bg-transparent p-0;
 }
 .prose-custom a {
-  @apply text-foreground underline decoration-border underline-offset-4 hover:decoration-foreground;
+  @apply text-foreground underline decoration-primary/40 underline-offset-4 hover:decoration-primary;
 }
 
-/* highlight.js light theme overrides — keep it gray */
+/* Faint paper grain for hand-made surfaces */
+.paper-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
+
+/* highlight.js overrides — sit on the warm paper */
 .hljs {
   background: hsl(var(--muted)) !important;
   color: hsl(var(--foreground)) !important;
