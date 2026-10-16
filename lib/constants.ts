@@ -9,7 +9,7 @@ export const siteConfig = {
   email: "abhishek.pun.3@gmail.com",
   location: "Butwal, Nepal",
   links: {
-    github: "https://github.com/anomalyco",
+    github: "https://github.com/abpun",
     linkedin: "https://linkedin.com/in/abhishekpun",
     twitter: "https://x.com/abhishekpun",
   },
