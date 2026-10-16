@@ -3,7 +3,7 @@ import Projects from "@/components/sections/Projects";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Selected work by Abhishek Pun — e-commerce, task management, and content tools.",
+  description: "Selected work by Abhishek Pun — election data, e-commerce, realtime chat and more.",
   alternates: { canonical: "/projects" },
 };
 

@@ -47,7 +47,7 @@ export default function TerrainCanvas() {
     const colors = new Float32Array(positions.count * 3);
     geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
     const low = readHsl("--secondary");
-    const high = readHsl("--primary");
+    const high = readHsl("--leaf");
     const peak = readHsl("--accent");
     const tmp = new THREE.Color();
 
