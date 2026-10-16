@@ -14,7 +14,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground font-serif text-sm font-bold">
+          <div className="flex h-9 w-9 -rotate-6 items-center justify-center rounded-full bg-primary font-serif text-sm font-bold text-primary-foreground shadow-warm transition-transform hover:rotate-0">
             A•P
           </div>
           <span className="font-serif text-[15px] font-semibold tracking-tight">
@@ -30,7 +30,7 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="relative text-sm text-muted-foreground transition-colors after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:bg-accent after:transition-all hover:text-foreground hover:after:w-full"
             >
               {link.label}
             </Link>

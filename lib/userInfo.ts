@@ -50,12 +50,12 @@ export const SERVICES = [
 ]
 
 export const TECH_STACKS = [
-  { name: "React", percentage: 98, color: "bg-foreground" },
-  { name: "Next.js", percentage: 95, color: "bg-foreground" },
-  { name: "Node.js", percentage: 95, color: "bg-zinc-700" },
-  { name: "TypeScript", percentage: 92, color: "bg-zinc-600" },
-  { name: "Postgres", percentage: 88, color: "bg-zinc-700" },
-  { name: "MongoDB", percentage: 90, color: "bg-foreground" },
+  { name: "React", percentage: 98, color: "bg-sky" },
+  { name: "Next.js", percentage: 95, color: "bg-secondary" },
+  { name: "Node.js", percentage: 95, color: "bg-leaf" },
+  { name: "TypeScript", percentage: 92, color: "bg-primary" },
+  { name: "Postgres", percentage: 88, color: "bg-sky" },
+  { name: "MongoDB", percentage: 90, color: "bg-accent" },
 ]
 
 export const PROJECTS = [

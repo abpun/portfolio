@@ -23,9 +23,9 @@ export default function TechStack() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.04 }}
-              className="rounded-2xl border bg-card p-5 text-center"
+              className="rounded-2xl border bg-card p-5 text-center shadow-paper transition-transform hover:-translate-y-1"
             >
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-muted font-serif text-sm font-bold">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-muted font-serif text-sm font-bold text-primary">
                 {tech.name.slice(0, 2)}
               </div>
               <div className="font-serif text-lg font-bold">{tech.percentage}%</div>

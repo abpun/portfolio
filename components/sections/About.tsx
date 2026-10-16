@@ -21,8 +21,8 @@ export default function About() {
               <br />
               <span className="font-light italic text-muted-foreground">pragmatist by trade.</span>
             </h2>
-            <div className="mt-6 rounded-2xl border bg-card p-5">
-              <Quote className="h-6 w-6 text-accent" />
+            <div className="mt-6 -rotate-1 rounded-2xl border border-l-4 border-l-accent bg-card p-5 shadow-paper">
+              <Quote className="h-6 w-6 text-primary/70" />
               <p className="mt-3 font-serif text-base leading-relaxed">
                 &ldquo;Good software feels obvious after it ships — and inevitable before.&rdquo;
               </p>
@@ -41,6 +41,9 @@ export default function About() {
               I&apos;m a full-stack developer based in Butwal, Nepal. I started by shipping small tools for local businesses —
               inventory trackers, booking flows — and learned that performance and clarity beat cleverness every time.
             </p>
+            <p className="-rotate-1 font-hand text-2xl leading-snug text-primary">
+              (still my favourite part: watching someone use the thing for the first time.)
+            </p>
             <p className="text-[15px] leading-relaxed text-muted-foreground">
               Today I work across the stack: design systems in React, APIs in Node, and data in Postgres/Mongo. I care about
               loading states, empty states, and the tiny moments that make a product feel crafted.
@@ -52,8 +55,8 @@ export default function About() {
                 { v: "5+", l: "Years building" },
                 { v: "98%", l: "Client retention" },
               ].map((s) => (
-                <div key={s.l} className="rounded-2xl border bg-muted/50 p-4 text-center">
-                  <div className="font-serif text-2xl font-bold">{s.v}</div>
+                <div key={s.l} className="rounded-2xl border bg-card p-4 text-center shadow-paper">
+                  <div className="font-serif text-2xl font-bold text-primary">{s.v}</div>
                   <div className="text-xs text-muted-foreground">{s.l}</div>
                 </div>
               ))}

@@ -6,7 +6,7 @@ import { SERVICES } from "@/lib/userInfo";
 
 export default function Services() {
   return (
-    <section id="services" className="bg-muted/40 px-4 py-16 sm:px-6 lg:px-8">
+    <section id="services" className="bg-muted/50 px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -27,9 +27,9 @@ export default function Services() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
             >
-              <Card className="group h-full border-muted bg-card transition-all hover:-translate-y-1 hover:shadow-md">
+              <Card className="group h-full bg-card transition-all hover:-translate-y-1 hover:border-primary/30 hover:shadow-warm">
                 <CardHeader>
-                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all group-hover:-rotate-6 group-hover:bg-primary group-hover:text-primary-foreground">
                     <service.icon className="h-5 w-5" />
                   </div>
                   <CardTitle className="text-base">{service.title}</CardTitle>
