@@ -1,147 +1,105 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowUpRight, Sparkles, MapPin } from "lucide-react";
+import { useRef } from "react";
+import { ArrowUpRight, ArrowDown, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Magnetic } from "@/components/motion/Magnetic";
+import { gsap, SplitText, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+
+const TerrainCanvas = dynamic(() => import("@/components/three/TerrainCanvas"), { ssr: false });
+
+const STATS = [
+  { value: 14, suffix: "+", label: "Products shipped" },
+  { value: 5, suffix: " yrs", label: "Building for the web" },
+  { value: 20, suffix: "+", label: "Happy clients" },
+];
 
 export default function Hero() {
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      const title = SplitText.create("[data-hero-title]", { type: "words,lines", mask: "lines" });
+      tl.from("[data-hero-eyebrow]", { autoAlpha: 0, y: 16, duration: 0.8 })
+        .from(title.words, { yPercent: 120, duration: 1.2, stagger: 0.04 }, "-=0.5")
+        .from("[data-hero-fade]", { autoAlpha: 0, y: 24, duration: 1, stagger: 0.1 }, "-=0.8")
+        .from("[data-hero-canvas]", { autoAlpha: 0, duration: 2, ease: "power2.out" }, 0.2);
+
+      gsap.to("[data-hero-scroll]", { y: 6, repeat: -1, yoyo: true, duration: 1.2, ease: "sine.inOut" });
+      gsap.to("[data-hero-content]", {
+        yPercent: -12,
+        autoAlpha: 0.2,
+        ease: "none",
+        scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
+      });
+    },
+    { scope: root },
+  );
+
   return (
-    <section className="relative overflow-hidden px-4 pb-12 pt-10 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid items-center gap-10 lg:grid-cols-12">
-          {/* Left */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="lg:col-span-7"
-          >
-            <p className="mb-2 -rotate-2 font-hand text-2xl text-primary">namaste, I&apos;m Abhishek 👋</p>
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border bg-card px-3 py-1.5 text-xs shadow-sm">
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-sm">
-                <Sparkles className="h-3.5 w-3.5" />
-              </span>
-              <span className="font-medium tracking-wide">Available for new projects — Q4 2026</span>
-              <span className="hidden h-1 w-1 rounded-full bg-primary sm:block" />
-              <span className="hidden text-muted-foreground sm:inline">Let&apos;s talk →</span>
+    <section ref={root} className="relative flex min-h-[calc(100svh-4.5rem)] items-center overflow-hidden px-4 sm:px-6 lg:px-8">
+      <div data-hero-canvas className="absolute inset-x-0 bottom-0 h-[60%]">
+        <TerrainCanvas />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background/10" />
+      </div>
+
+      <div data-hero-content className="relative mx-auto w-full max-w-6xl py-16">
+        <div data-hero-eyebrow className="mb-8 inline-flex items-center gap-2 rounded-full border bg-card/80 px-4 py-1.5 text-xs font-medium backdrop-blur">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-leaf opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-leaf" />
+          </span>
+          Available for new projects — Q4 2026
+        </div>
+
+        <h1
+          data-hero-title
+          className="max-w-4xl font-serif text-[2.6rem] font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-[5.2rem]"
+        >
+          Full-stack developer crafting digital products that <em className="font-normal text-primary">feel human.</em>
+        </h1>
+
+        <p data-hero-fade className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+          I&apos;m <span className="font-medium text-foreground">Abhishek Pun</span>. I help teams in Nepal and beyond ship
+          fast, accessible web apps with React, Next.js and thoughtful design.
+        </p>
+
+        <div data-hero-fade className="mt-10 flex flex-wrap items-center gap-4">
+          <Magnetic>
+            <Button asChild size="lg">
+              <Link href="/contact">
+                Start a project <ArrowUpRight />
+              </Link>
+            </Button>
+          </Magnetic>
+          <Button asChild variant="outline" size="lg">
+            <Link href="/#projects">View selected work</Link>
+          </Button>
+        </div>
+
+        <dl data-hero-fade className="mt-14 grid max-w-2xl grid-cols-3 gap-6 border-t pt-8">
+          {STATS.map((s) => (
+            <div key={s.label} className="flex flex-col-reverse gap-1">
+              <dt className="text-xs text-muted-foreground sm:text-sm">{s.label}</dt>
+              <dd className="font-serif text-3xl font-semibold sm:text-4xl">
+                {s.value}
+                <span className="text-primary">{s.suffix}</span>
+              </dd>
             </div>
+          ))}
+        </dl>
 
-            <h1 className="font-serif text-[2.2rem] font-[650] leading-[0.95] tracking-tight sm:text-5xl lg:text-[3.6rem]">
-              Full-stack
-              <br />
-              <span className="font-light italic text-primary">developer</span> crafting
-              <br />
-              digital products that
-              <br />
-              <span className="relative inline-block">
-                feel human.
-                <svg
-                  aria-hidden
-                  viewBox="0 0 220 16"
-                  preserveAspectRatio="none"
-                  className="absolute -bottom-2 left-0 h-3 w-full text-accent"
-                >
-                  <path
-                    d="M3 11 C 40 4, 80 14, 118 8 S 190 5, 217 9"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-            </h1>
-
-            <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-              I&apos;m <span className="font-medium text-foreground">Abhishek</span> — I help teams in Nepal and beyond ship fast, accessible web apps with
-              React, Next.js, and thoughtful design. No bloat, just what works.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <Link href="/contact">
-                  Start a project <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="/#projects">View selected work</Link>
-              </Button>
-            </div>
-
-            <div className="mt-8 flex flex-wrap items-center gap-6 border-t pt-6 text-sm">
-              <span className="flex items-center gap-2 text-muted-foreground">
-                <MapPin className="h-4 w-4 text-primary" /> Butwal, Nepal — Remote worldwide
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-leaf" /> Responds in ~2h
-              </span>
-            </div>
-          </motion.div>
-
-          {/* Right — editorial card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20, rotate: 1 }}
-            animate={{ opacity: 1, y: 0, rotate: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="relative lg:col-span-5"
-          >
-            <div className="relative overflow-hidden rounded-[2rem] border bg-card p-6 shadow-warm">
-              <div aria-hidden className="paper-grain pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-multiply" />
-              {/* subtle paper grid */}
-              <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `linear-gradient(hsl(var(--border)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)`, backgroundSize: "20px 20px" }} />
-
-              <div className="relative">
-                <div className="mb-6 flex items-center justify-between">
-                  <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium tracking-widest"> PROFILE — 2026</span>
-                  <span className="flex gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-primary" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-accent" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-leaf" />
-                  </span>
-                </div>
-
-                <div className="flex gap-5">
-                  <div className="flex h-[96px] w-[96px] shrink-0 -rotate-3 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary to-accent font-serif text-2xl font-bold text-primary-foreground shadow-warm">
-                    AP
-                  </div>
-                  <div>
-                    <h3 className="font-serif text-lg font-semibold leading-tight">Abhishek Pun</h3>
-                    <p className="text-sm text-muted-foreground">Full Stack Developer</p>
-                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                      5+ years • 10+ products shipped • Obsessed with performance &amp; DX.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-6 grid grid-cols-3 gap-3 text-center">
-                  {[
-                    { k: "Projects", v: "14+" },
-                    { k: "Experience", v: "5 yrs" },
-                    { k: "Clients", v: "20+" },
-                  ].map((s) => (
-                    <div key={s.k} className="rounded-2xl border border-dashed border-primary/25 bg-muted/70 p-3">
-                      <div className="font-serif text-lg font-bold">{s.v}</div>
-                      <div className="text-[11px] tracking-widest text-muted-foreground">{s.k.toUpperCase()}</div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  <span className="rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">React</span>
-                  <span className="rounded-full border bg-background px-3 py-1 text-xs">Next.js</span>
-                  <span className="rounded-full border bg-background px-3 py-1 text-xs">TypeScript</span>
-                  <span className="rounded-full border bg-background px-3 py-1 text-xs">Postgres</span>
-                </div>
-              </div>
-            </div>
-
-            {/* floating accent */}
-            <div className="absolute -bottom-7 -right-3 hidden rotate-3 rounded-sm bg-accent px-5 pb-3 pt-4 font-hand text-2xl leading-none text-accent-foreground shadow-lg lg:block">
-              <span aria-hidden className="absolute -top-2 left-1/2 h-4 w-14 -translate-x-1/2 -rotate-2 bg-card/70" />
-              let&apos;s build something useful ✦
-            </div>
-          </motion.div>
+        <div data-hero-fade className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
+          <span className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-primary" /> Butwal, Nepal — remote worldwide
+          </span>
+          <Link href="/#services" className="flex items-center gap-2 hover:text-foreground">
+            <ArrowDown data-hero-scroll className="h-4 w-4" /> Scroll to explore
+          </Link>
         </div>
       </div>
     </section>

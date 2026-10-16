@@ -1,78 +1,79 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight, Quote } from "lucide-react";
+import { useReveal } from "@/components/motion/useReveal";
+import { SectionHeading } from "./SectionHeading";
+
+const STATS = [
+  { value: 14, suffix: "+", label: "Products shipped" },
+  { value: 5, suffix: "+", label: "Years building" },
+  { value: 98, suffix: "%", label: "Client retention" },
+];
+
+const PRINCIPLES = [
+  { title: "Clarity over cleverness", body: "Readable code and obvious interfaces age better than tricks." },
+  { title: "Performance is a feature", body: "Fast pages respect people's time, data plans and patience." },
+  { title: "Sweat the small states", body: "Loading, empty and error states are where trust is earned." },
+];
 
 export default function About() {
+  const root = useRef<HTMLElement>(null);
+  useReveal(root);
+
   return (
-    <section id="about" className="px-4 py-16 sm:px-6 lg:px-8">
+    <section ref={root} id="about" className="bg-muted/50 px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="mx-auto max-w-6xl">
-        <div className="grid gap-10 lg:grid-cols-12">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-5"
-          >
-            <p className="mb-3 text-xs font-semibold tracking-[0.2em] text-primary">ABOUT — WHO I AM</p>
-            <h2 className="font-serif text-3xl font-semibold leading-tight md:text-4xl">
-              Builder by heart,
-              <br />
-              <span className="font-light italic text-muted-foreground">pragmatist by trade.</span>
-            </h2>
-            <div className="mt-6 -rotate-1 rounded-2xl border border-l-4 border-l-accent bg-card p-5 shadow-paper">
-              <Quote className="h-6 w-6 text-primary/70" />
-              <p className="mt-3 font-serif text-base leading-relaxed">
-                &ldquo;Good software feels obvious after it ships — and inevitable before.&rdquo;
-              </p>
-              <p className="mt-2 text-xs tracking-widest text-muted-foreground">— PRODUCT THINKING</p>
-            </div>
-          </motion.div>
+        <SectionHeading index="02" label="About" title="Builder by heart, pragmatist by trade." />
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="space-y-5 lg:col-span-7"
-          >
-            <p className="text-[15px] leading-relaxed text-muted-foreground">
-              I&apos;m a full-stack developer based in Butwal, Nepal. I started by shipping small tools for local businesses —
-              inventory trackers, booking flows — and learned that performance and clarity beat cleverness every time.
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="space-y-6 lg:col-span-7">
+            <p data-reveal className="text-lg leading-relaxed">
+              I&apos;m a full-stack developer based in Butwal, Nepal. I started by shipping small tools for local
+              businesses — inventory trackers, booking flows — and learned that performance and clarity beat cleverness
+              every time.
             </p>
-            <p className="-rotate-1 font-hand text-2xl leading-snug text-primary">
-              (still my favourite part: watching someone use the thing for the first time.)
-            </p>
-            <p className="text-[15px] leading-relaxed text-muted-foreground">
-              Today I work across the stack: design systems in React, APIs in Node, and data in Postgres/Mongo. I care about
-              loading states, empty states, and the tiny moments that make a product feel crafted.
+            <p data-reveal className="leading-relaxed text-muted-foreground">
+              Today I work across the stack: design systems in React, APIs in Node, and data in Postgres and Mongo. I care
+              about the tiny moments that make a product feel crafted, and about leaving codebases nicer than I found them.
             </p>
 
-            <div className="grid grid-cols-3 gap-3 pt-2">
-              {[
-                { v: "14+", l: "Products shipped" },
-                { v: "5+", l: "Years building" },
-                { v: "98%", l: "Client retention" },
-              ].map((s) => (
-                <div key={s.l} className="rounded-2xl border bg-card p-4 text-center shadow-paper">
-                  <div className="font-serif text-2xl font-bold text-primary">{s.v}</div>
-                  <div className="text-xs text-muted-foreground">{s.l}</div>
+            <dl data-reveal className="grid grid-cols-3 gap-4 pt-4">
+              {STATS.map((s) => (
+                <div key={s.label} className="flex flex-col-reverse gap-1 rounded-2xl border bg-card p-5">
+                  <dt className="text-xs text-muted-foreground sm:text-sm">{s.label}</dt>
+                  <dd className="font-serif text-3xl font-semibold text-primary sm:text-4xl">
+                    <span data-count={s.value}>{s.value}</span>
+                    {s.suffix}
+                  </dd>
                 </div>
               ))}
-            </div>
+            </dl>
 
-            <div className="flex gap-3 pt-2">
+            <div data-reveal className="flex flex-wrap gap-3 pt-2">
               <Button asChild>
-                <a href="/resume.pdf" target="_blank">
-                  Download CV <ArrowUpRight className="h-4 w-4" />
+                <a href="/resume.pdf" target="_blank" rel="noreferrer">
+                  Download CV <ArrowUpRight />
                 </a>
               </Button>
               <Button variant="outline" asChild>
-                <a href="#contact">Read my story</a>
+                <a href="#contact">Get in touch</a>
               </Button>
             </div>
-          </motion.div>
+          </div>
+
+          <ol className="space-y-4 lg:col-span-5">
+            {PRINCIPLES.map((p, i) => (
+              <li key={p.title} data-reveal className="flex gap-5 rounded-2xl border bg-card p-6">
+                <span className="font-mono text-sm text-primary">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="font-serif text-lg font-semibold">{p.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

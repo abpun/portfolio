@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-5">
             <div className="mb-3 flex items-center gap-3">
-              <div className="flex h-9 w-9 -rotate-6 items-center justify-center rounded-full bg-accent font-serif text-sm font-bold text-accent-foreground">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent font-serif text-sm font-bold text-accent-foreground">
                 A•P
               </div>
               <span className="font-serif text-lg font-semibold">Abhishek Pun</span>
@@ -51,7 +51,7 @@ export default function Footer() {
               <MapPin className="h-4 w-4 text-accent" /> {siteConfig.location}
             </p>
             <p className="mt-6 text-xs leading-relaxed text-secondary-foreground/50">
-              © {new Date().getFullYear()} Abhishek Pun. Made by hand in Butwal, Nepal. Set in Newsreader, Inter & Caveat.
+              © {new Date().getFullYear()} Abhishek Pun. Made in Butwal, Nepal. Built with Next.js, Three.js & GSAP.
             </p>
           </div>
         </div>
