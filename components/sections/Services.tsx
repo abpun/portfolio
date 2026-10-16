@@ -1,46 +1,47 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { SERVICES } from "@/lib/userInfo";
+import { useReveal } from "@/components/motion/useReveal";
+import { SectionHeading } from "./SectionHeading";
 
 export default function Services() {
-  return (
-    <section id="services" className="bg-muted/50 px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="mb-2 text-xs font-semibold tracking-[0.2em] text-primary">SERVICES</p>
-            <h2 className="font-serif text-3xl font-semibold md:text-4xl">What I do best</h2>
-          </div>
-          <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-            Small team energy, senior-level execution. I plug into your workflow and ship.
-          </p>
-        </div>
+  const root = useRef<HTMLElement>(null);
+  useReveal(root);
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+  return (
+    <section ref={root} id="services" className="px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          index="01"
+          label="Services"
+          title="What I do best"
+          intro="Small-team energy, senior-level execution. I plug into your workflow, take ownership, and ship."
+        />
+
+        <ul className="border-t">
           {SERVICES.map((service, i) => (
-            <motion.div
+            <li
               key={service.title}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
+              data-reveal
+              className="group relative grid grid-cols-12 items-center gap-4 border-b py-7 transition-colors md:py-9"
             >
-              <Card className="group h-full bg-card transition-all hover:-translate-y-1 hover:border-primary/30 hover:shadow-warm">
-                <CardHeader>
-                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all group-hover:-rotate-6 group-hover:bg-primary group-hover:text-primary-foreground">
-                    <service.icon className="h-5 w-5" />
-                  </div>
-                  <CardTitle className="text-base">{service.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-[13.5px] leading-relaxed">{service.description}</CardDescription>
-                </CardContent>
-              </Card>
-            </motion.div>
+              <span className="absolute inset-0 origin-bottom scale-y-0 bg-muted transition-transform duration-500 ease-out group-hover:scale-y-100" />
+              <span className="relative col-span-2 font-mono text-sm text-muted-foreground md:col-span-1">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="relative col-span-10 flex items-center gap-4 font-serif text-2xl font-semibold transition-transform duration-500 group-hover:translate-x-2 md:col-span-5 md:text-3xl">
+                <service.icon className="h-6 w-6 shrink-0 text-primary" />
+                {service.title}
+              </h3>
+              <p className="relative col-span-10 col-start-3 text-sm leading-relaxed text-muted-foreground md:col-span-5 md:col-start-auto">
+                {service.description}
+              </p>
+              <ArrowUpRight className="relative col-span-1 hidden h-5 w-5 justify-self-end text-muted-foreground transition-all duration-500 group-hover:rotate-45 group-hover:text-primary md:block" />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

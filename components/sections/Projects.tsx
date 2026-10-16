@@ -1,82 +1,114 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { ArrowUpRight, Github } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PROJECTS } from "@/lib/userInfo";
-import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
+import { useReveal } from "@/components/motion/useReveal";
+import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import { SectionHeading } from "./SectionHeading";
 
 const PREVIEW_TINTS = [
-  "from-primary/25 via-accent/20 to-muted",
-  "from-leaf/25 via-sky/15 to-muted",
-  "from-accent/30 via-primary/10 to-muted",
-  "from-sky/25 via-leaf/15 to-muted",
+  "from-primary/30 via-accent/20 to-card",
+  "from-secondary/40 via-leaf/20 to-card",
+  "from-sky/30 via-primary/10 to-card",
 ];
 
 export default function Projects() {
+  const root = useRef<HTMLElement>(null);
+  useReveal(root);
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { yPercent: -8 },
+          { yPercent: 8, ease: "none", scrollTrigger: { trigger: el.parentElement, scrub: true } },
+        );
+      });
+    },
+    { scope: root },
+  );
+
   return (
-    <section id="projects" className="bg-muted/30 px-4 py-16 sm:px-6 lg:px-8">
+    <section ref={root} id="projects" className="bg-muted/50 px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="mb-2 text-xs font-semibold tracking-[0.2em] text-primary">SELECTED WORK</p>
-            <h2 className="font-serif text-3xl font-semibold md:text-4xl">Things I&apos;ve built</h2>
-          </div>
-          <Button variant="outline" asChild>
-            <Link href="/projects">
-              All projects <ArrowUpRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
+        <SectionHeading
+          index="04"
+          label="Selected work"
+          title="Things I've built"
+          intro={
+            <>
+              A few projects I&apos;m proud of. More experiments live on{" "}
+              <Link href="/projects" className="text-foreground underline decoration-primary/40 underline-offset-4 hover:decoration-primary">
+                the projects page
+              </Link>
+              .
+            </>
+          }
+        />
 
         <div className="grid gap-6 md:grid-cols-2">
           {PROJECTS.map((project, i) => (
-            <motion.div
+            <article
               key={project.id}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
+              data-reveal
+              className={`group relative flex flex-col overflow-hidden rounded-3xl border bg-card transition-shadow duration-500 hover:shadow-warm ${
+                i === 0 ? "md:col-span-2" : ""
+              }`}
             >
-              <Card className="group h-full overflow-hidden transition-all hover:-translate-y-1 hover:shadow-warm">
-                <div className={`relative flex aspect-[16/9] items-center justify-center bg-gradient-to-br ${PREVIEW_TINTS[i % PREVIEW_TINTS.length]}`}>
-                  <div aria-hidden className="paper-grain absolute inset-0 opacity-20 mix-blend-multiply" />
-                  <span className="relative -rotate-2 rounded-sm bg-card px-4 py-2 font-hand text-xl shadow-paper transition-transform group-hover:rotate-0">
-                    {project.title}
+              <div className={`relative overflow-hidden ${i === 0 ? "aspect-[16/9] md:aspect-[21/9]" : "aspect-[16/10]"}`}>
+                <div data-parallax className="absolute -inset-y-[10%] inset-x-0">
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${PREVIEW_TINTS[i % PREVIEW_TINTS.length]} transition-transform duration-700 ease-out group-hover:scale-105`}
+                  />
+                  <div
+                    className="absolute inset-0 opacity-[0.15]"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
+                      backgroundSize: "40px 40px",
+                    }}
+                  />
+                </div>
+                <div className="absolute inset-0 flex items-end justify-between p-6 md:p-8">
+                  <span className="font-mono text-sm text-foreground/70">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-card text-foreground shadow-paper transition-all duration-500 group-hover:bg-primary group-hover:text-primary-foreground">
+                    <ArrowUpRight className="h-5 w-5 transition-transform duration-500 group-hover:rotate-45" />
                   </span>
                 </div>
-                <CardHeader>
-                  <div className="mb-1 flex items-start justify-between gap-3">
-                    <CardTitle className="text-lg leading-tight">{project.title}</CardTitle>
-                    <Badge variant={project.status === "Completed" ? "default" : "secondary"}>{project.status}</Badge>
-                  </div>
-                  <CardDescription className="leading-relaxed">{project.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="mb-4 flex flex-wrap gap-1.5">
-                    {project.tags.map((tag) => (
-                      <Badge key={tag} variant="outline" className="rounded-full text-[11px]">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="flex gap-2">
-                    <Button size="sm" asChild>
-                      <Link href={project.href}>
-                        <ExternalLink className="h-4 w-4" /> Live
-                      </Link>
-                    </Button>
-                    <Button size="sm" variant="outline" asChild>
-                      <Link href={project.github}>
-                        <Github className="h-4 w-4" /> Code
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+              </div>
+
+              <div className="flex flex-1 flex-col p-6 md:p-8">
+                <div className="mb-3 flex items-start justify-between gap-4">
+                  <h3 className="font-serif text-2xl font-semibold leading-tight">
+                    <Link href={project.href} className="after:absolute after:inset-0 focus-visible:outline-none">
+                      {project.title}
+                    </Link>
+                  </h3>
+                  <Badge variant={project.status === "Completed" ? "muted" : "default"} className="shrink-0">
+                    {project.status}
+                  </Badge>
+                </div>
+                <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">{project.description}</p>
+                <div className="mt-6 flex flex-wrap items-center gap-2">
+                  {project.tags.map((tag) => (
+                    <Badge key={tag} variant="outline" className="font-normal">
+                      {tag}
+                    </Badge>
+                  ))}
+                  <Link
+                    href={project.github}
+                    className="relative z-10 ml-auto flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
+                  >
+                    <Github className="h-4 w-4" /> Code
+                  </Link>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
       </div>
